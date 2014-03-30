@@ -15,6 +15,8 @@
 #include <algorithm>
 
 using namespace std;
+
+int position[1000+1], sub[1000+1];
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  LIS
@@ -26,12 +28,17 @@ LIS ( vector<int> &v, int n )
 {
 	vector<int> s;
 	s.push_back(v[0]);
+	vector<int>::iterator tmp;
 	for ( int i = 0; i < n; ++i ) {
 		if ( v[i] > s.back() ) {
 			s.push_back(v[i]);
+			position[i] = s.end() - s.begin() - 1;
+//			position[i] = s.size() - 1;
 		}
 		else {
-			*lower_bound(s.begin(), s.end(), v[i]) = v[i];
+			tmp = lower_bound(s.begin(), s.end(), v[i]);
+			*tmp = v[i];
+			position[i] = tmp - s.begin();
 		}
 	}
 	return s.size();
@@ -47,6 +54,7 @@ LIS ( vector<int> &v, int n )
 main ( int argc, char *argv[] )
 {
 	int n;
+	freopen("LongestIncrSub.txt", "r", stdin);
 	while ( ~scanf("%d", &n) ) {
 		vector<int> v;
 		int tmp;
@@ -54,7 +62,22 @@ main ( int argc, char *argv[] )
 			scanf ( "%d", &tmp );
 			v.push_back(tmp);
 		}
-		printf ( "%d\n", LIS(v, n) );
+		int result = LIS(v, n);
+		printf ( "%d\n", result );
+		int t = result - 1;
+		for ( int i = n - 1 ; i >= 0; --i ) {
+			if ( t == position[i] ) {
+				sub[t] = v[i];
+				--t;
+			}
+		}
+		for ( int i = 0; i < result; ++i ) {
+			if ( i ) {
+				printf ( " " );
+			}
+			printf ( "%d", sub[i] );
+		}
+		printf ( "\n" );
 	}
 
 		return EXIT_SUCCESS;
