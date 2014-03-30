@@ -1,4 +1,0 @@
-aaabbac
-aabbccac
-a
-z
