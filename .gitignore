@@ -1,3 +1,7 @@
+# input files
+*.txt
+*.in
+*.out
 # Compiled Object files
 *.slo
 *.lo
