@@ -25,6 +25,10 @@ nqueens ( int a[], int k, int n )
 {
 	if ( k == n ) {
 		nSolution++;
+		for ( int i= 1; i <= n; ++i ) {
+			printf ( "%d ", a[i] );
+		}
+		printf ( "\n" );
 	}
 	else {
 		k = k + 1;
